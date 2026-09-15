@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#000000" />
+    <title>Voxel</title>
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+      canvas { display: block; width: 100%; height: 100%; }
+      #hud { position: fixed; top: 8px; left: 8px; color: #fff; font: 12px/1.4 monospace;
+             background: rgba(0,0,0,0.55); padding: 6px 8px; white-space: pre; pointer-events: none; }
+      #hud[hidden] { display: none; }
+    </style>
+    <script type="module" crossorigin src="/voxel-web/assets/game-CokGah7H.js"></script>
+    <link rel="modulepreload" crossorigin href="/voxel-web/assets/prng-B6NM6RdM.js">
+    <link rel="modulepreload" crossorigin href="/voxel-web/assets/aabb-Cra5bR4K.js">
+    <link rel="modulepreload" crossorigin href="/voxel-web/assets/villager-Dm--2jwK.js">
+    <link rel="modulepreload" crossorigin href="/voxel-web/assets/skeletonModel-Dg3e7EB3.js">
+    <link rel="modulepreload" crossorigin href="/voxel-web/assets/treeSpecies-D1IveszA.js">
+    <link rel="stylesheet" crossorigin href="/voxel-web/assets/game-DlrAh_M_.css">
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+    <div id="hud" hidden></div>
+  </body>
+</html>

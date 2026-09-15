@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skeleton workshop</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#8d8d8b;color:#1f1f1d;font:14px system-ui,sans-serif}canvas{display:block;width:100%;height:100vh}
+header{position:absolute;top:30px;left:34px;pointer-events:none;color:#f1efe8}header small{letter-spacing:.22em;font-size:10px;opacity:.75}h1{font:38px Georgia,serif;margin:9px 0}header p{margin:0;opacity:.8}
+aside{position:absolute;right:24px;top:24px;width:230px;padding:20px;background:#f4f2eaee;border:1px solid #b9b7ab;border-radius:12px;box-shadow:0 12px 40px #0002}
+label{display:flex;align-items:center;justify-content:space-between;margin:10px 0}select,button{font:inherit;border:1px solid #c0bfb2;border-radius:5px;background:#fffdf6;padding:7px;color:inherit}select{max-width:130px}button{cursor:pointer;width:100%;margin-top:9px}input{accent-color:#4f6f8f}
+h2{font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 16px}footer{position:absolute;bottom:24px;left:34px;color:#efede6;font-size:12px}a{color:inherit}
+#captions{position:fixed;inset:0;pointer-events:none}#captions div{position:fixed;transform:translateX(-50%);text-align:center;color:#f4f2ea;text-shadow:0 1px 2px #0006}#captions strong{display:block;font:18px Georgia,serif}#captions small{letter-spacing:.12em;font-size:10px}
+</style>  <script type="module" crossorigin src="/voxel-web/assets/skeleton-D_vNljAf.js"></script>
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/prng-B6NM6RdM.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/villager-Dm--2jwK.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/skeletonModel-Dg3e7EB3.js">
+</head><body>
+<canvas id="scene"></canvas>
+<header><small>FIRST ENEMY · CHARACTER KIT</small><h1>The skeletons</h1><p>Old bones in whatever they could scavenge.</p></header>
+<aside><h2>Skeleton workshop</h2>
+<label>View <select id="view"><option value="lineup">Random lineup</option><option value="single">One skeleton</option></select></label>
+<label>Kit <select id="kit"><option value="salvage">Salvaged war gear</option><option value="leather">Hunter leathers</option><option value="cloth">Cloth A</option><option value="clothB">Cloth B</option><option value="bare">Bare bones</option></select></label>
+<div id="gear"></div>
+<label>Walk cycle <input id="walk" type="checkbox" checked></label>
+<button id="random">Generate variation</button>
+<p style="font-size:11px;line-height:1.5;color:#6b6b60">Seed <span id="seed"></span> · shares the villagers' joints, so it wears all their gear.</p>
+<a href="/villager.html" style="font-size:12px">Villager workshop ↗</a> · <a href="/" style="font-size:12px">Enter the world ↗</a></aside>
+<div id="captions"></div>
+<footer>Drag to orbit · Scroll to zoom · Esc › Debug › Enemies spawns them in the world</footer></body></html>
