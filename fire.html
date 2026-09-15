@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fire laboratory · Voxel</title>
+<style>
+*{box-sizing:border-box}body{margin:0;overflow:hidden;background:#1c2229;color:#e8e6df;font-family:Arial,sans-serif;font-size:12px}
+canvas{display:block;width:100vw;height:100vh;touch-action:none}
+aside{position:absolute;top:0;right:0;bottom:0;width:300px;overflow-y:auto;background:#161b20ee;padding:14px 16px 24px;border-left:1px solid #2c343c}
+h1{font:normal 20px Georgia,serif;margin:4px 0 2px}aside p{margin:0 0 10px;color:#a9a99d;line-height:1.5}
+h2{font-size:10px;letter-spacing:2px;color:#8e9aa6;margin:16px 0 6px;text-transform:uppercase}
+label{display:grid;grid-template-columns:1fr 62px;align-items:center;gap:8px;margin:5px 0}label span{color:#cfd3c8}label output{text-align:right;color:#f0e6b8;font-variant-numeric:tabular-nums}
+input[type=range]{grid-column:1/3;width:100%;margin:0 0 4px}
+select,button{font:12px Arial,sans-serif;border:1px solid #4b5560;background:#262d34;color:#e8e6df;padding:7px 9px;border-radius:4px;cursor:pointer}
+select{width:100%}button.on{background:#6a4a2d;border-color:#c48a4a}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0}.row button{flex:1 1 auto}
+.check{display:flex;gap:8px;align-items:center;margin:6px 0}
+#stats{font-family:Consolas,monospace;font-size:11px;color:#c2ab8f;white-space:pre-line;margin-top:10px}
+#hint{position:absolute;left:16px;bottom:14px;color:#c8c8be;font-size:11px;line-height:1.6;background:#161b20cc;padding:8px 10px;border-radius:4px}
+</style>  <script type="module" crossorigin src="/voxel-web/assets/fire-DpFe9AgI.js"></script>
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/OrbitControls-D7JWV1O_.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/settings-DvVp_JXM.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/water-CfmBxzR2.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/spanishKit-BnCm-gJa.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/treeSpecies-D1IveszA.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/pipeline-CLYEAXgt.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/lab-yXfpBt6z.js">
+</head><body>
+<canvas id="lab" aria-label="Fire laboratory"></canvas>
+<aside>
+  <h1>Fire laboratory</h1>
+  <p>A 10 m piece of the generated world: real trees, grass and flowers. Left click or drag uses the tool; right drag turns, middle drag pans, wheel zooms.</p>
+  <h2>Scene</h2>
+  <select id="preset"></select>
+  <div class="row"><button id="reset">Rebuild scene</button><button id="pause">Pause</button><button id="step">Step 1 tick</button></div>
+  <h2>Tool</h2>
+  <div class="row"><button data-tool="torch" class="on">Torch</button><button data-tool="pour">Pour water</button><button data-tool="dig">Dig</button><button data-tool="build">Build</button><button data-tool="dry">Dry</button></div>
+  <label><span>Brush radius, m</span><output id="brushOut"></output><input id="brush" type="range" min="0.1" max="1.2" step="0.05" value="0.3"></label>
+  <label><span>Speed of time</span><output id="speedOut"></output><input id="speed" type="range" min="0" max="4" step="0.05" value="1"></label>
+  <h2>Fire (settings.json "fire")</h2>
+  <label><span>Ticks per second</span><output id="ticksPerSecondOut"></output><input id="ticksPerSecond" type="range" min="2" max="30" step="1"></label>
+  <label><span>Burning blocks per tick</span><output id="cellsPerTickOut"></output><input id="cellsPerTick" type="range" min="100" max="20000" step="100"></label>
+  <label><span>Spread (multiplies every catch)</span><output id="spreadOut"></output><input id="spread" type="range" min="0" max="5" step="0.05"></label>
+  <label><span>Reach, m</span><output id="reachOut"></output><input id="reach" type="range" min="0.08" max="0.25" step="0.08"></label>
+  <label><span>Rise (upward spread)</span><output id="riseOut"></output><input id="rise" type="range" min="0" max="6" step="0.1"></label>
+  <label><span>Burn time variation</span><output id="burnVariationOut"></output><input id="burnVariation" type="range" min="0" max="0.9" step="0.05"></label>
+  <label><span>Flames linger, s</span><output id="flameSecondsOut"></output><input id="flameSeconds" type="range" min="0" max="3" step="0.1"></label>
+  <label><span>Wind pushes fire downwind</span><output id="windOut"></output><input id="wind" type="range" min="0" max="5" step="0.1"></label>
+  <div class="check"><input id="scorch" type="checkbox"><span>Burning grass blackens the ground</span></div>
+  <h2>Wind (Debug &gt; Wind in the game)</h2>
+  <label><span>Wind strength</span><output id="windStrengthOut"></output><input id="windStrength" type="range" min="0" max="3" step="0.05" value="1"></label>
+  <label><span>Wind direction, °</span><output id="windDirectionOut"></output><input id="windDirection" type="range" min="0" max="360" step="5" value="240"></label>
+  <div class="row"><button id="copy">Copy settings JSON</button><button id="defaults">Back to the file's values</button></div>
+  <h2>Fuels (blocks.json "fuel")</h2>
+  <label><span>Grass burns for, s</span><output id="grass_blade_secondsOut"></output><input id="grass_blade_seconds" type="range" min="0.2" max="10" step="0.1"></label>
+  <label><span>Grass catches, per s</span><output id="grass_blade_catchOut"></output><input id="grass_blade_catch" type="range" min="0" max="30" step="0.5"></label>
+  <label><span>Leaves burn for, s</span><output id="leaves_secondsOut"></output><input id="leaves_seconds" type="range" min="0.2" max="20" step="0.1"></label>
+  <label><span>Leaves catch, per s</span><output id="leaves_catchOut"></output><input id="leaves_catch" type="range" min="0" max="30" step="0.5"></label>
+  <label><span>Logs burn for, s</span><output id="log_secondsOut"></output><input id="log_seconds" type="range" min="1" max="60" step="1"></label>
+  <label><span>Logs catch, per s</span><output id="log_catchOut"></output><input id="log_catch" type="range" min="0" max="5" step="0.05"></label>
+  <div class="row"><button id="copyFuels">Copy fuels</button></div>
+  <div id="stats"></div>
+</aside>
+<div id="hint">Torch: click or drag on grass or a tree to set it alight.<br>Pour water on a fire to put it out; Dig cuts a firebreak.<br>Copy the JSON when you like it and paste it to me.</div>
+</body></html>

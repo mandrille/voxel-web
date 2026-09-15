@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Water laboratory · Voxel</title>
+<style>
+*{box-sizing:border-box}body{margin:0;overflow:hidden;background:#1c2229;color:#e8e6df;font-family:Arial,sans-serif;font-size:12px}
+canvas{display:block;width:100vw;height:100vh;touch-action:none}
+aside{position:absolute;top:0;right:0;bottom:0;width:300px;overflow-y:auto;background:#161b20ee;padding:14px 16px 24px;border-left:1px solid #2c343c}
+h1{font:normal 20px Georgia,serif;margin:4px 0 2px}aside p{margin:0 0 10px;color:#a9a99d;line-height:1.5}
+h2{font-size:10px;letter-spacing:2px;color:#8e9aa6;margin:16px 0 6px;text-transform:uppercase}
+label{display:grid;grid-template-columns:1fr 62px;align-items:center;gap:8px;margin:5px 0}label span{color:#cfd3c8}label output{text-align:right;color:#f0e6b8;font-variant-numeric:tabular-nums}
+input[type=range]{grid-column:1/3;width:100%;margin:0 0 4px}
+select,button{font:12px Arial,sans-serif;border:1px solid #4b5560;background:#262d34;color:#e8e6df;padding:7px 9px;border-radius:4px;cursor:pointer}
+select{width:100%}button.on{background:#3d6a4d;border-color:#6aa77f}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0}.row button{flex:1 1 auto}
+.check{display:flex;gap:8px;align-items:center;margin:6px 0}
+#stats{font-family:Consolas,monospace;font-size:11px;color:#9fb3c2;white-space:pre-line;margin-top:10px}
+#hint{position:absolute;left:16px;bottom:14px;color:#c8c8be;font-size:11px;line-height:1.6;background:#161b20cc;padding:8px 10px;border-radius:4px}
+</style>  <script type="module" crossorigin src="/voxel-web/assets/water-1IOQ5soQ.js"></script>
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/OrbitControls-D7JWV1O_.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/settings-DvVp_JXM.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/water-CfmBxzR2.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/lab-yXfpBt6z.js">
+</head><body>
+<canvas id="lab" aria-label="Water laboratory"></canvas>
+<aside>
+  <h1>Water laboratory</h1>
+  <p>A 10 m box of the game's voxels with the game's water. Left click or drag uses the tool; right drag turns, middle drag pans, wheel zooms.</p>
+  <h2>Scene</h2>
+  <select id="preset"></select>
+  <div class="row"><button id="reset">Rebuild scene</button><button id="pause">Pause</button><button id="step">Step 1 tick</button></div>
+  <h2>Tool</h2>
+  <div class="row"><button data-tool="pour" class="on">Pour water</button><button data-tool="dig">Dig</button><button data-tool="build">Build</button><button data-tool="dry">Dry</button><button data-tool="torch">Torch</button></div>
+  <label><span>Brush radius, m</span><output id="brushOut"></output><input id="brush" type="range" min="0.1" max="1.2" step="0.05" value="0.4"></label>
+  <label><span>Speed of time</span><output id="speedOut"></output><input id="speed" type="range" min="0" max="4" step="0.05" value="1"></label>
+  <h2>Flow (settings.json "water")</h2>
+  <label><span>Ticks per second</span><output id="ticksPerSecondOut"></output><input id="ticksPerSecond" type="range" min="2" max="60" step="1"></label>
+  <label><span>Cells per tick</span><output id="cellsPerTickOut"></output><input id="cellsPerTick" type="range" min="50" max="20000" step="50"></label>
+  <label><span>Fall per tick, m</span><output id="fallPerTickOut"></output><input id="fallPerTick" type="range" min="0.08" max="3" step="0.08"></label>
+  <label><span>Spread onto ground lower by</span><output id="spreadDropOut"></output><input id="spreadDrop" type="range" min="1" max="2" step="1"></label>
+  <div class="check"><input id="pressure" type="checkbox"><span>Pressure: higher water in the body pushes onto level ground</span></div>
+  <label><span>Body search, cells</span><output id="bodySearchOut"></output><input id="bodySearch" type="range" min="64" max="16384" step="64"></label>
+  <label><span>Body cells per tick</span><output id="bodyCellsPerTickOut"></output><input id="bodyCellsPerTick" type="range" min="1000" max="200000" step="1000"></label>
+  <div class="check"><input id="springs" type="checkbox"><span>Springs: lake water never runs out</span></div>
+  <h2>Look</h2>
+  <label><span>Water opacity</span><output id="opacityOut"></output><input id="opacity" type="range" min="0.1" max="1" step="0.05"></label>
+  <label><span>Wind strength</span><output id="windStrengthOut"></output><input id="windStrength" type="range" min="0" max="3" step="0.05" value="1"></label>
+  <div class="row"><button id="copy">Copy settings JSON</button><button id="defaults">Back to the file's values</button></div>
+  <div id="stats"></div>
+</aside>
+<div id="hint">Pour: click or drag on the ground to drop a ball of water there.<br>Dig / Build change the ground; Dry removes water; Torch lights grass (see /fire.html).<br>Copy the JSON when you like it and paste it to me.</div>
+</body></html>
