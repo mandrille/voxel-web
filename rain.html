@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rain laboratory · Voxel</title>
+<style>
+*{box-sizing:border-box}body{margin:0;overflow:hidden;background:#1c2229;color:#e8e6df;font-family:Arial,sans-serif;font-size:12px}
+canvas{display:block;width:100vw;height:100vh;touch-action:none}
+aside{position:absolute;top:0;right:0;bottom:0;width:300px;overflow-y:auto;background:#161b20ee;padding:14px 16px 24px;border-left:1px solid #2c343c}
+h1{font:normal 20px Georgia,serif;margin:4px 0 2px}aside p{margin:0 0 10px;color:#a9a99d;line-height:1.5}
+h2{font-size:10px;letter-spacing:2px;color:#8e9aa6;margin:16px 0 6px;text-transform:uppercase}
+label{display:grid;grid-template-columns:1fr 62px;align-items:center;gap:8px;margin:5px 0}label span{color:#cfd3c8}label output{text-align:right;color:#f0e6b8;font-variant-numeric:tabular-nums}
+input[type=range]{grid-column:1/3;width:100%;margin:0 0 4px}
+select,button{font:12px Arial,sans-serif;border:1px solid #4b5560;background:#262d34;color:#e8e6df;padding:7px 9px;border-radius:4px;cursor:pointer}
+select{width:100%}button.on{background:#3d5a6a;border-color:#6a9ab7}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0}.row button{flex:1 1 auto}
+#stats{font-family:Consolas,monospace;font-size:11px;color:#9fb3c2;white-space:pre-line;margin-top:10px}
+#hint{position:absolute;left:16px;bottom:14px;color:#c8c8be;font-size:11px;line-height:1.6;background:#161b20cc;padding:8px 10px;border-radius:4px}
+</style>  <script type="module" crossorigin src="/voxel-web/assets/rain-B0QW2XcD.js"></script>
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/prng-DCV7dpsb.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/farm-kit-CADQcpQ9.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/spanish-kit-CCl7g8bV.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/spanishKit-hDMtS2_L.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/textures-CAJiFtsO.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/treeSpecies-D1IveszA.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/water-B05th7Ny.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/rain-Dj84w9Bu.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/lab-JrfcSglm.js">
+</head><body>
+<canvas id="lab" aria-label="Rain laboratory"></canvas>
+<aside>
+  <h1>Rain laboratory</h1>
+  <p>The game's rain over a piece of the world. Right drag turns, middle drag pans, wheel zooms; the rain falls round wherever the camera is.</p>
+  <h2>Scene</h2>
+  <select id="preset"></select>
+  <div class="row"><button id="reset">Rebuild scene</button><button id="pause" hidden>Pause</button><button id="step" hidden>Step</button></div>
+  <h2>Tool (left drag)</h2>
+  <div class="row"><button data-tool="none" class="on">Look</button><button data-tool="dig">Dig</button><button data-tool="build">Build</button></div>
+  <label><span>Brush radius, m</span><output id="brushOut"></output><input id="brush" type="range" min="0.1" max="2" step="0.1" value="0.6"></label>
+  <input id="speed" type="hidden" value="1"><output id="speedOut" hidden></output>
+  <h2>Now</h2>
+  <label><span>How hard it rains</span><output id="rainOut"></output><input id="rain" type="range" min="0" max="1" step="0.05" value="0.8"></label>
+  <label><span>Wind strength</span><output id="windStrengthOut"></output><input id="windStrength" type="range" min="0" max="3" step="0.05" value="1"></label>
+  <label><span>Wind direction, °</span><output id="windDirectionOut"></output><input id="windDirection" type="range" min="0" max="360" step="5" value="240"></label>
+  <label><span>Rain volume</span><output id="rainVolumeOut"></output><input id="rainVolume" type="range" min="0" max="1" step="0.05" value="0.3"></label>
+  <h2>Drops (settings.json "weather")</h2>
+  <label><span>Drops at full rain</span><output id="rainDropsOut"></output><input id="rainDrops" type="range" min="100" max="8000" step="100"></label>
+  <label><span>Fall speed, m/s</span><output id="dropSpeedOut"></output><input id="dropSpeed" type="range" min="2" max="20" step="0.5"></label>
+  <label><span>Streak length, m</span><output id="dropLengthOut"></output><input id="dropLength" type="range" min="0.1" max="2" step="0.05"></label>
+  <label><span>Box round the camera, m</span><output id="areaOut"></output><input id="area" type="range" min="6" max="60" step="1"></label>
+  <label><span>Lean with the wind</span><output id="dropLeanOut"></output><input id="dropLean" type="range" min="0" max="1.5" step="0.05"></label>
+  <label><span>Streak opacity</span><output id="dropOpacityOut"></output><input id="dropOpacity" type="range" min="0.05" max="1" step="0.05"></label>
+  <h2>Splashes</h2>
+  <label><span>Rings alive at once</span><output id="splashesOut"></output><input id="splashes" type="range" min="0" max="4000" step="50"></label>
+  <label><span>Ring size, m</span><output id="splashSizeOut"></output><input id="splashSize" type="range" min="0.03" max="0.6" step="0.01"></label>
+  <label><span>Ring life, s</span><output id="splashSecondsOut"></output><input id="splashSeconds" type="range" min="0.1" max="1.5" step="0.05"></label>
+  <label><span>Rings within, m</span><output id="splashRangeOut"></output><input id="splashRange" type="range" min="2" max="40" step="1"></label>
+  <h2>Wind in weather</h2>
+  <label><span>Wind × in rain</span><output id="rainWindOut"></output><input id="rainWind" type="range" min="1" max="4" step="0.1"></label>
+  <label><span>Wind × in a storm</span><output id="stormWindOut"></output><input id="stormWind" type="range" min="1" max="5" step="0.1"></label>
+  <div class="row"><button id="copy">Copy settings JSON</button><button id="defaults">Back to the file's values</button></div>
+  <div id="stats"></div>
+</aside>
+<div id="hint">Zoom in close to the ground to see the splashes.<br>Copy the JSON when you like it and paste it to me.</div>
+</body></html>
