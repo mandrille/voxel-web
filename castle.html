@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Castle</title>
+<script>
+// Opened straight from the folder (file://) the page cannot run: it needs the game's dev server.
+if (location.protocol === 'file:') {
+  const url = 'http://localhost:5210/castle.html' + location.search;
+  fetch('http://localhost:5210/', { mode: 'no-cors' }).then(() => location.replace(url), () => {
+    document.body.innerHTML = '<div id="offline"><h1>Castle</h1><p>This page runs on the game server.</p>'
+      + '<p>Double-click <b>PLAY.bat</b> in the Voxel folder, then open<br><a href="' + url + '">' + url + '</a></p></div>';
+  });
+}
+</script>
+<style>
+body{margin:0;overflow:hidden;font:13px "Segoe UI",sans-serif;color:#efe3c5;background:#9fc3dd}canvas{display:block}
+aside,#offline{position:absolute;top:16px;left:16px;bottom:16px;width:240px;display:flex;flex-direction:column;padding:16px;background:#35191cef;border:3px double #a68a53;border-radius:7px;box-shadow:0 8px 24px #0005}
+#offline{bottom:auto;width:360px;display:block}
+h1{font:26px Georgia,serif;color:#ddc68d;margin:0 0 6px}h2{font:11px "Segoe UI",sans-serif;letter-spacing:2px;text-transform:uppercase;color:#baa985;margin:12px 0 4px}
+#list{overflow-y:auto;flex:1;min-height:100px;margin:6px 0;padding-right:4px;scrollbar-width:thin;scrollbar-color:#a68a53 #2a1416}
+button{display:block;width:100%;text-align:left;margin:3px 0;padding:6px 8px;background:#4c3525;color:#efe3c5;border:1px solid #6f5a3a;border-radius:3px;cursor:pointer}button:hover{border-color:#a68a53}button.on{border-color:#ddc68d;background:#6a4a30}
+#cams button{display:inline-block;width:auto;margin-right:4px}
+label{display:block;margin-top:8px}input[type=range]{width:100%;accent-color:#ddc68d}select{background:#4c3525;color:#efe3c5;border:1px solid #6f5a3a}#info{font-size:11px;color:#baa985;margin-top:8px}a{color:#ddc68d}small{color:#baa985}
+@media(max-width:600px){aside{top:auto;height:45vh;left:8px;right:8px;width:auto;bottom:8px}#offline{width:auto;right:16px}}
+</style>  <script type="module" crossorigin src="/voxel-web/assets/castle-BaNfKC99.js"></script>
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/prng-CsTgpQWw.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/farm-kit-BXvZHRwB.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/spanish-kit-CCl7g8bV.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/spanishKit-D_Su3tOV.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/treeSpecies-Da2ZjQBw.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/textures-oGocljEh.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/castlePlan-BK0tZdTp.js">
+</head><body><canvas></canvas>
+<aside><h1>Castle</h1><small>The royal castle piece by piece, or whole. Big pieces at 12 per metre take a few seconds.</small>
+<div id="list"></div>
+<label>Voxels per metre <select id="density"><option>4</option><option>6</option><option>8</option><option>12</option></select></label>
+<label>Section height <input id="cut" type="range" min="0.03" max="1" step="0.01" value="1"></label>
+<h2>Look inside</h2><div id="cams"></div>
+<div id="info"></div>
+<p><small>Drag to orbit · Scroll to zoom</small><br><a href="./buildings.html">Buildings</a> · <a href="./">World</a></p>
+</aside></body></html>
