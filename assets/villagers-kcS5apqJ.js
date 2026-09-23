@@ -1,0 +1,1 @@
+const a=["#e0b08b","#bd8760","#97613f","#704a35"],t=["#32291f","#59412b","#90704b","#aaa18a"],c=["#537b78","#8a4c49","#69774b","#61748d","#c2a678"],n="#ddcdb0",o="#875837",b="#513623",s="#a6b5bc",e={skin:a,hair:t,cloth:c,linen:n,leather:o,leatherDark:b,iron:s};export{e as p};
