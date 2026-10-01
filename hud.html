@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HUD lab</title>
+<script>
+// Opened straight from the folder (file://) the page cannot run: it needs the game's dev server.
+if (location.protocol === 'file:') {
+  const url = 'http://localhost:5210/hud.html' + location.search;
+  fetch('http://localhost:5210/', { mode: 'no-cors' }).then(() => location.replace(url), () => {
+    document.body.innerHTML = '<div style="margin:40px;font:15px Segoe UI,sans-serif;color:#efe3c5"><h1>HUD lab</h1><p>This page runs on the game server.</p>'
+      + '<p>Double-click <b>PLAY.bat</b> in the Voxel folder, then open<br><a style="color:#ddc68d" href="' + url + '">' + url + '</a></p></div>';
+  });
+}
+</script>
+  <script type="module" crossorigin src="/voxel-web/assets/hud-umWZF9WI.js"></script>
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/fantasyTheme-FUF3HU6H.js">
+  <link rel="modulepreload" crossorigin href="/voxel-web/assets/saveShot-CeN8s0-e.js">
+  <link rel="stylesheet" crossorigin href="/voxel-web/assets/fantasyTheme-Ct6N7F01.css">
+  <link rel="stylesheet" crossorigin href="/voxel-web/assets/hud-B_cWlJ6U.css">
+</head><body class="lab-body">
+<div id="stage" class="lab-stage">
+  <div class="lab-sky"></div><div class="lab-hills lab-far"></div><div class="lab-hills lab-near"></div><div class="lab-ground"></div>
+  <div class="lab-cross"></div>
+  <div id="hud" class="lab-hud"></div>
+</div>
+<aside id="panel" class="lab-panel">
+  <h1>HUD lab</h1>
+  <p class="lab-note">The game's HUD widgets on a stand-in frame, driven by fake state. <code>await hudShot('hud/effects.png')</code> in the console saves the frame into artifacts/.</p>
+  <div id="sections"></div>
+  <p class="lab-note"><a href="./weapons.html">Weapons</a> · <a href="./">World</a></p>
+</aside>
+</body></html>
